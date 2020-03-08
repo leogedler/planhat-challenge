@@ -17,33 +17,51 @@
 
 
   <div class="container">
-    <h1>Dashboard</h1>
 
-    <div class="mainInput">
-      <div class="input-group mb-3">
-        <input class="form-control" type="number" min="0" value="20" id=companies_number>
-        <div class="input-group-append">
-          <button class="btn btn-primary" onclick="generateCompanies()">Generate</button>
+    <div class="row header">
+      <div class="col-4">
+        <h1>Dashboard</h1>
+      </div>
+
+      <div class="col-4">
+        <div class="mainInput">
+          <div class="input-group mb-3">
+            <input class="form-control" type="number" min="0" max="2000" value="20" id=companies_number>
+            <div class="input-group-append">
+              <button class="btn btn-primary" onclick="generateCompanies()">Generate companies</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-4">
+        <div class="mainInput" id="simulation_div">
+          <button class="btn btn-success" onclick="toggleSimilation()" id="start_simulation">Start Simulation <i class="fas fa-play icon"></i></button>
+          <button class="btn btn-danger" onclick="toggleSimilation()" id="stop_simulation">Stop Simulation <i class="fas fa-stop icon"></i></button>
         </div>
       </div>
     </div>
 
 
+
+
     <div class="container" id="dashboard_container">
       <div class="row">
-        <div class="col-6">
-          <div class="card">
+        <div class="col-6 chart-div">
+          <div class="card card-shadow">
             <div class="card-body">
-              <h5 class="card-title">Health average: <span id="health_average"></span></h5>
+              <h6 class="card-title">Health average: <span class="average" id="health_average"></span></h6>
               <canvas id="healthChart" width="400" height="400"></canvas>
             </div>
           </div>
         </div>
 
-        <div class="col-6">
-          <div class="card">
+        <div class="col-6 chart-div">
+          <div class="card card-shadow">
             <div class="card-body">
-              <h5 class="card-title">Monthly value average: <span id="monthly_value_average"></span></h5>
+              <h6 class="card-title">Monthly value average: <span class="average" id="monthly_value_average"></span>
+              </h6>
               <canvas id="monthlyValueAverageChart" width="400" height="400"></canvas>
             </div>
           </div>
@@ -51,11 +69,22 @@
       </div>
 
       <div class="row">
-        <div class="col-6">
-          <div class="card">
+        <div class="col-6 chart-div">
+          <div class="card card-shadow">
             <div class="card-body">
-              <h5 class="card-title">Users</h5>
+              <h6 class="card-title">Users average: <span class="average" id="users_average"></span></h6>
+              <h6 class="card-title">Active users average: <span class="average" id="active_users_average"></span></h6>
               <canvas id="usersChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-6 chart-div">
+          <div class="card card-shadow">
+            <div class="card-body">
+              <h6 class="card-title">Messages average: <span class="average" id="messages_average"></span></h6>
+              <canvas id="messagesChart" width="400" height="400"></canvas>
             </div>
           </div>
         </div>

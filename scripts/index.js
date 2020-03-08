@@ -5,15 +5,41 @@ let generator;
 let healthChart;
 let monthlyValueAverageChart;
 let usersChart;
+let messagesChart;
+let similationInterval;
 
 function generateCompanies() {
   generator = new Generator();
   companiesArray = generator.generateCompanies();
-  console.log('Companies --->', companiesArray);
+  console.log('Initial Companies --->', companiesArray);
   $('#dashboard_container').show();
+  $('#simulation_div').show();
   generateHealthChart();
   generateMonthlyValueChart();
-  generateUserChart();
+  generateUsersChart();
+  generateMessagesChart();
+}
+
+function toggleSimilation(){
+
+  if (similationInterval) {
+    clearInterval(similationInterval);
+    $('#start_simulation').show();
+    $('#stop_simulation').hide();
+    return similationInterval = null;
+  }else {
+    $('#stop_simulation').show();
+    $('#start_simulation').hide();
+  }
+
+  similationInterval = setInterval(()=>{
+    generator.forthwardTime();
+    console.log('Companies simulation --->', companiesArray);
+    generateHealthChart();
+    generateMonthlyValueChart();
+    generateUsersChart();
+    generateMessagesChart();
+  }, 1000)
 }
 
 function generateHealthChart() {
@@ -46,7 +72,6 @@ function generateHealthChart() {
 
 function generateMonthlyValueChart() {
   $('#monthly_value_average').text(Math.round(generator.calculateAverage('monthlyValue')));
-
   const ctx = $('#monthlyValueAverageChart');
   if (monthlyValueAverageChart) monthlyValueAverageChart.destroy();
   monthlyValueAverageChart = new Chart(ctx, {
@@ -61,6 +86,7 @@ function generateMonthlyValueChart() {
       }]
     },
     options: {
+      responsive: true,
       scales: {
         yAxes: [{
           stacked: true
@@ -70,10 +96,12 @@ function generateMonthlyValueChart() {
   });
 }
 
-function generateUserChart() {
+function generateUsersChart() {
+  $('#users_average').text(Math.round(generator.calculateAverage('usersNumber')));
+  $('#active_users_average').text(Math.round(generator.calculateAverage('activeUsers')));
   const ctx = $('#usersChart');
   if (usersChart) usersChart.destroy();
-  healthChart = new Chart(ctx, {
+  usersChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: generator.getCompaniesProperty('id'),
@@ -100,6 +128,30 @@ function generateUserChart() {
           stacked: true
         }]
       }
+    }
+  });
+}
+
+function generateMessagesChart() {
+  $('#messages_average').text(Math.round(generator.calculateAverage('messages')));
+  const ctx = $('#messagesChart');
+  if (messagesChart) messagesChart.destroy();
+  messagesChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: generator.getCompaniesProperty('id'),
+      datasets: [{
+        label: 'Messages',
+        data: generator.getCompaniesProperty('messages'),
+        backgroundColor: generator.generateColorForCompanies(),
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        display: false
+      },
     }
   });
 }
