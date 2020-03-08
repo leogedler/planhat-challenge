@@ -1,5 +1,11 @@
 # Planhat 12 hours Challenge
 
+Built with vanilla JS and jQuery / Bootstrap / FontAwesome
+
+> To run this project just open the `index.html` in a web browser.
+
+-----------------------------------------------------------------
+
 ## Tech Stack:
 This is a front-end only exercise, to be implemented in pure JS / HTML / CSS.
 
@@ -30,7 +36,6 @@ $1000/month, plus $1/user per month
 All subscriptions are paid monthly at the start of the subscription period, and based on the number of users (active or not) at that point.
 
 
-
 ### Delivery A:
 Write a function (plain JS) that generates a potential set of the 2000 customers (given the info above), Each customer should have at least the following properties/metrics:
 
@@ -58,7 +63,6 @@ Score 1-10, you'll need to invent the formula and it should reflect how much val
 Static Properties (pseudo randomly picked from the potential values listed in brackets below)
  - Sector  [Public, Private]
  - Location [Europe, North America, Asia]
-
 
 
 
