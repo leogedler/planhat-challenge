@@ -34,7 +34,9 @@ function toggleSimilation(){
 
   similationInterval = setInterval(()=>{
     generator.forthwardTime();
-    console.log('Companies simulation --->', companiesArray);
+    generator.generateChurn();
+    generator.generateNewBiz();
+    // console.log('Companies simulation --->', companiesArray);
     generateHealthChart();
     generateMonthlyValueChart();
     generateUsersChart();
@@ -43,7 +45,6 @@ function toggleSimilation(){
 }
 
 function generateHealthChart() {
-  console.log('Health --->', generator.calculateAverage('healthScore'));
   $('#health_average').text(generator.calculateAverage('healthScore'));
   const ctx = $('#healthChart');
   if (healthChart) healthChart.destroy();

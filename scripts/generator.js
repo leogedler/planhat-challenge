@@ -1,9 +1,12 @@
 class Generator {
   companyNumber;
   companies = [];
+  lostCompanies = [];
   sectors = ['Public', 'Private'];
   locations = ['Europe', 'Asia', 'North America'];
   currentDate = new Date();
+  churn = 10;
+  biz = 15; 
   plans = {
     plan500: {
       name: '$500/month',
@@ -29,8 +32,8 @@ class Generator {
   }
 
   generateActiveUsers(usersNumber) {
-    const min = usersNumber * 0.2;
-    const max = usersNumber * 0.6;
+    const min = usersNumber * 0.1;
+    const max = usersNumber * 0.9;
     const activeUsers = this.getRandom(min, max);
     return activeUsers > 0 ? activeUsers : 1;
   }
@@ -42,7 +45,7 @@ class Generator {
   }
 
   generateChannels(usersNumber) {
-    const min = usersNumber * 0.10;
+    const min = usersNumber * 0.1;
     const max = usersNumber * 0.9;
     const channels = this.getRandom(min, max);
     return channels > 0 ? usersNumber : 1;
@@ -117,7 +120,7 @@ class Generator {
 
   calculateAverage(property) {
     const sum = this.companies.reduce((acc, c) => +acc + +c[property], 0);
-    return sum / this.companyNumber;
+    return (sum / this.companyNumber).toFixed(2);
   }
 
   forthwardTime() {
@@ -141,6 +144,7 @@ class Generator {
       c.healthScore = healthScore;
       c.lastRenewalDate = lastRenewalDate;
       c.nextRenewalDate = nextRenewalDate;
+
       return c;
     })
   }
@@ -152,7 +156,84 @@ class Generator {
     } else {
       percentage = 1 - Math.abs(percentage);
     }
-    return property * percentage;
+    return Math.ceil(property * percentage);
+  }
+
+
+  isChurn(c) {
+    let chance = this.getRandom(1, 100);
+    if (c.healthScore < 3) {
+      if (c.location ===  'North America'){
+        if ( chance > 1 && chance < this.churn ) {
+          return true;
+        }
+      }
+      if (c.location === 'Europe') {
+        if ( chance > 1 && chance < this.churn * 0.8 ) {
+          return true;
+        }
+      }
+      if (c.location === 'Asia') {
+        if ( chance > 1 && chance < this.churn * 0.7 ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  generateChurn() {
+    const companies = [];
+    this.companies.forEach((c, i) => {
+      if (this.isChurn(c)) {
+        console.log('lost company --->', c);
+        this.lostCompanies.push(c);
+      } else {
+        companies.push(c)
+      };
+
+    });
+    this.companyNumber = companies.length;
+    this.companies = companies;
+  }
+
+  generateNewBiz(){
+    let chance = this.getRandom(1, 100);
+    if (chance > 1 && chance < this.biz ) {
+      const company = this.generateCompany(`b-${this.getRandom(1,2000)}`);
+      console.log('new company --->', company);
+      this.companies.push(company);
+    }
+  }
+
+
+  generateCompany(index) {
+    const usersNumber = this.generateUsersNumber();
+    const activeUsers = this.generateActiveUsers(usersNumber);
+    const channels = this.generateChannels(activeUsers);
+    const messages = this.generateMessages(channels);
+    const { monthlyValue, planType } = this.generateCompanyPlan(activeUsers);
+    const sector = this.getSector();
+    const location = this.getLocations();
+    const sinceDate = this.generateSinceDate();
+    const lastRenewalDate = this.getLastRenewalDate(sinceDate);
+    const nextRenewalDate = this.getNextRenewalDate(lastRenewalDate);
+    const healthScore = this.calculateHealth(usersNumber, activeUsers, messages, channels);
+    return {
+      id: index + 1,
+      usersNumber,
+      activeUsers,
+      channels,
+      messages,
+      monthlyValue,
+      planType,
+      sector,
+      location,
+      sinceDate,
+      lastRenewalDate,
+      nextRenewalDate,
+      healthScore
+    }
   }
 
   generateCompanies() {
@@ -163,32 +244,7 @@ class Generator {
       return alert('Companies number cannot be greater than 2000')
     };
     for (let index = 0; index < this.companyNumber; index++) {
-      const usersNumber = this.generateUsersNumber();
-      const activeUsers = this.generateActiveUsers(usersNumber);
-      const channels = this.generateChannels(activeUsers);
-      const messages = this.generateMessages(channels);
-      const { monthlyValue, planType } = this.generateCompanyPlan(activeUsers);
-      const sector = this.getSector();
-      const locations = this.getLocations();
-      const sinceDate = this.generateSinceDate();
-      const lastRenewalDate = this.getLastRenewalDate(sinceDate);
-      const nextRenewalDate = this.getNextRenewalDate(lastRenewalDate);
-      const healthScore = this.calculateHealth(usersNumber, activeUsers, messages, channels);
-      const company = {
-        id: index + 1,
-        usersNumber,
-        activeUsers,
-        channels,
-        messages,
-        monthlyValue,
-        planType,
-        sector,
-        locations,
-        sinceDate,
-        lastRenewalDate,
-        nextRenewalDate,
-        healthScore
-      }
+      const company = this.generateCompany(index);
       this.companies.push(company);
     }
     return this.companies;
