@@ -31,7 +31,8 @@ class Generator {
   generateActiveUsers(usersNumber) {
     const min = usersNumber * 0.2;
     const max = usersNumber * 0.6;
-    return this.getRandom(min, max);
+    const activeUsers = this.getRandom(min, max);
+    return activeUsers > 0 ? activeUsers : 1;
   }
 
   generateSinceDate() {
@@ -43,13 +44,15 @@ class Generator {
   generateChannels(usersNumber) {
     const min = usersNumber * 0.10;
     const max = usersNumber * 0.9;
-    return this.getRandom(min, max);
+    const channels = this.getRandom(min, max);
+    return channels > 0 ? usersNumber : 1;
   }
 
   generateMessages(channels) {
     const min = channels * 100;
     const max = channels * 10000;
-    return this.getRandom(min, max);
+    const messages = this.getRandom(min, max);
+    return messages > 0 ? channels : 10;
   }
 
   generateCompanyPlan(activeUsers) {
@@ -113,7 +116,7 @@ class Generator {
   }
 
   calculateAverage(property) {
-    const sum = this.companies.reduce((acc, c) => acc + c[property], 0);
+    const sum = this.companies.reduce((acc, c) => +acc + +c[property], 0);
     return sum / this.companyNumber;
   }
 
@@ -143,7 +146,7 @@ class Generator {
   }
 
   modifyProperty(property) {
-    let percentage = this.getRandom(-15, 20) / 100;
+    let percentage = this.getRandom(-10, 20) / 100;
     if (percentage > 0) {
       percentage = 1 + percentage;
     } else {

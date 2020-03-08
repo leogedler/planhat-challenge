@@ -12,6 +12,7 @@ function generateCompanies() {
   generator = new Generator();
   companiesArray = generator.generateCompanies();
   console.log('Initial Companies --->', companiesArray);
+  $('#initial_message').hide();
   $('#dashboard_container').show();
   $('#simulation_div').show();
   generateHealthChart();
@@ -21,7 +22,6 @@ function generateCompanies() {
 }
 
 function toggleSimilation(){
-
   if (similationInterval) {
     clearInterval(similationInterval);
     $('#start_simulation').show();
@@ -43,6 +43,7 @@ function toggleSimilation(){
 }
 
 function generateHealthChart() {
+  console.log('Health --->', generator.calculateAverage('healthScore'));
   $('#health_average').text(generator.calculateAverage('healthScore'));
   const ctx = $('#healthChart');
   if (healthChart) healthChart.destroy();

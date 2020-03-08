@@ -1,5 +1,18 @@
+.header{
+  background-color: #E5E5E5;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+  padding-top: 5px;
+}
+
+
 #dashboard_container {
   display: none;
+}
+
+.initial_message{
+  padding-top: 30vh;
+  margin: auto;
+  text-align: center;
 }
 
 #simulation_div {
@@ -14,9 +27,6 @@
   margin-left: 5px;
 }
 
-.header {
-  margin-top: 15px;
-}
 .mainInput {
   margin-top: 10px;
   max-width: 300px;
@@ -32,4 +42,8 @@
 
 .card-shadow {
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  margin-top: 10px;
 }

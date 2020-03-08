@@ -14,84 +14,97 @@
 </head>
 
 <body>
-
-
-  <div class="container">
-
-    <div class="row header">
-      <div class="col-4">
-        <h1>Dashboard</h1>
-      </div>
-
-      <div class="col-4">
-        <div class="mainInput">
-          <div class="input-group mb-3">
-            <input class="form-control" type="number" min="0" max="2000" value="20" id=companies_number>
-            <div class="input-group-append">
-              <button class="btn btn-primary" onclick="generateCompanies()">Generate companies</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-4">
-        <div class="mainInput" id="simulation_div">
-          <button class="btn btn-success" onclick="toggleSimilation()" id="start_simulation">Start Simulation <i class="fas fa-play icon"></i></button>
-          <button class="btn btn-danger" onclick="toggleSimilation()" id="stop_simulation">Stop Simulation <i class="fas fa-stop icon"></i></button>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="container" id="dashboard_container">
+  <div class="container-fluid header">
+    <div class="container">
       <div class="row">
-        <div class="col-6 chart-div">
-          <div class="card card-shadow">
-            <div class="card-body">
-              <h6 class="card-title">Health average: <span class="average" id="health_average"></span></h6>
-              <canvas id="healthChart" width="400" height="400"></canvas>
-            </div>
-          </div>
+        <div class="col-3">
+          <h1>Dashboard</h1>
         </div>
 
-        <div class="col-6 chart-div">
-          <div class="card card-shadow">
-            <div class="card-body">
-              <h6 class="card-title">Monthly value average: <span class="average" id="monthly_value_average"></span>
-              </h6>
-              <canvas id="monthlyValueAverageChart" width="400" height="400"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-6 chart-div">
-          <div class="card card-shadow">
-            <div class="card-body">
-              <h6 class="card-title">Users average: <span class="average" id="users_average"></span></h6>
-              <h6 class="card-title">Active users average: <span class="average" id="active_users_average"></span></h6>
-              <canvas id="usersChart" width="400" height="400"></canvas>
+        <div class="col-3">
+          <div class="mainInput">
+            <div class="input-group mb-3">
+              <input class="form-control" type="number" min="0" max="2000" value="20" id=companies_number>
+              <div class="input-group-append">
+                <button class="btn btn-primary" onclick="generateCompanies()">Generate companies</button>
+              </div>
             </div>
           </div>
         </div>
 
 
-        <div class="col-6 chart-div">
-          <div class="card card-shadow">
-            <div class="card-body">
-              <h6 class="card-title">Messages average: <span class="average" id="messages_average"></span></h6>
-              <canvas id="messagesChart" width="400" height="400"></canvas>
-            </div>
+        <div class="col-3">
+          <div class="mainInput" id="simulation_div">
+            <button class="btn btn-success" onclick="toggleSimilation()" id="start_simulation">Start Simulation <i
+                class="fas fa-play icon"></i></button>
+            <button class="btn btn-danger" onclick="toggleSimilation()" id="stop_simulation">Stop Simulation <i
+                class="fas fa-stop icon"></i></button>
           </div>
         </div>
       </div>
+
     </div>
-
   </div>
+
+
+  <div class="container" id="dashboard_container">
+
+    <div class="row title">
+      <div class="col-6">
+        <h5>Companies data</h5>
+        <p>Companies are identified by its <strong>index ID</strong>, you can open the browser <strong>console</strong> and check the company array output through each iteration.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 chart-div">
+        <div class="card card-shadow">
+          <div class="card-body">
+            <h6 class="card-title">Health average: <span class="average" id="health_average"></span></h6>
+            <canvas id="healthChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 chart-div">
+        <div class="card card-shadow">
+          <div class="card-body">
+            <h6 class="card-title">Monthly value average: <span class="average" id="monthly_value_average"></span>
+            </h6>
+            <canvas id="monthlyValueAverageChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 chart-div">
+        <div class="card card-shadow">
+          <div class="card-body">
+            <h6 class="card-title">Users average: <span class="average" id="users_average"></span></h6>
+            <h6 class="card-title">Active users average: <span class="average" id="active_users_average"></span></h6>
+            <canvas id="usersChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-6 chart-div">
+        <div class="card card-shadow">
+          <div class="card-body">
+            <h6 class="card-title">Messages average: <span class="average" id="messages_average"></span></h6>
+            <canvas id="messagesChart" width="400" height="225"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="initial_message">
+    <h5 class="initial_message">Start by defining the number of companies that you want to simulate!</h5>
+  </div>
+
+
 
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
