@@ -1,6 +1,6 @@
 # Planhat 12 hours Challenge
 
-Built with vanilla JS and jQuery / Bootstrap / FontAwesome
+Built with vanilla JS and jQuery / Bootstrap / FontAwesome / Chart.js
 
 > To run this project just open the `index.html` in a web browser.
 
