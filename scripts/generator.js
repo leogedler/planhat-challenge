@@ -1,12 +1,21 @@
+
+/**
+ * Main class generator for the companies
+ *
+ * @class Generator
+ */
 class Generator {
   companyNumber;
   companies = [];
   lostCompanies = [];
+  lostCompaniesNumber;
+  newCompanies = [];
+  newCompaniesNumber;
   sectors = ['Public', 'Private'];
   locations = ['Europe', 'Asia', 'North America'];
   currentDate = new Date();
   churn = 10;
-  biz = 15; 
+  biz = 15;
   plans = {
     plan500: {
       name: '$500/month',
@@ -18,9 +27,6 @@ class Generator {
       month: 1000,
       userCost: 1
     }
-  }
-
-  constructor() {
   }
 
   getRandom(min, max) {
@@ -162,19 +168,17 @@ class Generator {
 
   isChurn(c) {
     let chance = this.getRandom(1, 100);
-    if (c.healthScore < 3) {
-      if (c.location ===  'North America'){
-        if ( chance > 1 && chance < this.churn ) {
+    if (c.healthScore < 2) {
+      if (c.location === 'North America') {
+        if (chance >= 1 && chance < this.churn) {
           return true;
         }
-      }
-      if (c.location === 'Europe') {
-        if ( chance > 1 && chance < this.churn * 0.8 ) {
+      } else if (c.location === 'Europe') {
+        if (chance >= 1 && chance < this.churn * 0.7) {
           return true;
         }
-      }
-      if (c.location === 'Asia') {
-        if ( chance > 1 && chance < this.churn * 0.7 ) {
+      } else if (c.location === 'Asia') {
+        if (chance >= 1 && chance < this.churn * 0.6) {
           return true;
         }
       }
@@ -188,6 +192,7 @@ class Generator {
       if (this.isChurn(c)) {
         console.log('lost company --->', c);
         this.lostCompanies.push(c);
+        this.lostCompaniesNumber = this.lostCompanies.length;
       } else {
         companies.push(c)
       };
@@ -197,13 +202,24 @@ class Generator {
     this.companies = companies;
   }
 
-  generateNewBiz(){
+  generateNewBiz() {
     let chance = this.getRandom(1, 100);
-    if (chance > 1 && chance < this.biz ) {
-      const company = this.generateCompany(`b-${this.getRandom(1,2000)}`);
+    if (chance >= 1 && chance < this.biz) {
+      const company = this.generateCompany(`b-${this.getRandom(1, 2000)}`);
       console.log('new company --->', company);
       this.companies.push(company);
+      this.newCompanies.push(company);
+      this.newCompaniesNumber = this.newCompanies.length;
+      this.companyNumber = this.companies.length;
     }
+  }
+
+  changeChurn(value) {
+    this.churn = value;
+  }
+
+  changeBiz(value) {
+    this.biz = value;
   }
 
 

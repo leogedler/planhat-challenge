@@ -6,42 +6,67 @@ let healthChart;
 let monthlyValueAverageChart;
 let usersChart;
 let messagesChart;
+let companiesChart;
 let similationInterval;
 
 function generateCompanies() {
   generator = new Generator();
   companiesArray = generator.generateCompanies();
   console.log('Initial Companies --->', companiesArray);
+  $('#current_company_number').text(generator.companyNumber);
+  $('#current_churn').text(generator.churn);
+  $('#current_biz').text(generator.biz);
   $('#initial_message').hide();
   $('#dashboard_container').show();
   $('#simulation_div').show();
+  $('#current_churn').text(10);
+  $('#current_biz').text(15);
+  $('#churn').val(10);
+  $('#biz').val(15);
   generateHealthChart();
   generateMonthlyValueChart();
   generateUsersChart();
   generateMessagesChart();
+  generateCompaniesChart();
 }
 
-function toggleSimilation(){
+function toggleSimilation() {
   if (similationInterval) {
     clearInterval(similationInterval);
     $('#start_simulation').show();
     $('#stop_simulation').hide();
     return similationInterval = null;
-  }else {
+  } else {
     $('#stop_simulation').show();
     $('#start_simulation').hide();
   }
 
-  similationInterval = setInterval(()=>{
+  similationInterval = setInterval(() => {
     generator.forthwardTime();
     generator.generateChurn();
     generator.generateNewBiz();
-    // console.log('Companies simulation --->', companiesArray);
+    $('#current_company_number').text(generator.companyNumber);
+    $('#current_churn').text(generator.churn);
+    $('#current_biz').text(generator.biz);
+    console.log('Companies simulation --->', companiesArray);
     generateHealthChart();
     generateMonthlyValueChart();
     generateUsersChart();
     generateMessagesChart();
+    generateCompaniesChart();
   }, 1000)
+}
+
+function changeChurn() {
+  const churn = $('#churn').val();
+  generator.changeChurn(churn);
+  $('#current_churn').text(generator.churn);
+}
+
+function changeBiz() {
+  const biz = $('#biz').val();
+  generator.changeBiz(biz);
+  $('#current_biz').text(generator.biz);
 }
 
 function generateHealthChart() {
@@ -154,6 +179,26 @@ function generateMessagesChart() {
       legend: {
         display: false
       },
+    }
+  });
+}
+
+function generateCompaniesChart() {
+  const ctx = $('#companiesChart');
+  if (companiesChart) companiesChart.destroy();
+  companiesChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['current companies', 'lost companies', 'new companies'],
+      datasets: [{
+        label: 'Messages',
+        data: [generator.companyNumber, generator.lostCompaniesNumber, generator.newCompaniesNumber],
+        backgroundColor: ['#0384fc', '#fc2c03', '#03fc41'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
     }
   });
 }

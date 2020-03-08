@@ -33,14 +33,42 @@
         </div>
 
 
-        <div class="col-3">
-          <div class="mainInput" id="simulation_div">
-            <button class="btn btn-success" onclick="toggleSimilation()" id="start_simulation">Start Simulation <i
-                class="fas fa-play icon"></i></button>
-            <button class="btn btn-danger" onclick="toggleSimilation()" id="stop_simulation">Stop Simulation <i
-                class="fas fa-stop icon"></i></button>
+        <div class="col-6" id="simulation_div">
+          <div class="row">
+            <div class="col-4">
+              <div class="mainInput">
+                <button class="btn btn-success" onclick="toggleSimilation()" id="start_simulation">Start Simulation <i
+                    class="fas fa-play icon"></i></button>
+                <button class="btn btn-danger" onclick="toggleSimilation()" id="stop_simulation">Stop Simulation <i
+                    class="fas fa-stop icon"></i></button>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mainInput">
+                <div class="input-group mb-3">
+                  <input class="form-control" type="number" min="0" max="40" value="10" id="churn">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" onclick="changeChurn()">Churn</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mainInput">
+                <div class="input-group mb-3">
+                  <input class="form-control" type="number" min="0" max="40" value="15" id="biz">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" onclick="changeBiz()">Biz</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
+
       </div>
 
     </div>
@@ -52,7 +80,27 @@
     <div class="row title">
       <div class="col-6">
         <h5>Companies data</h5>
-        <p>Companies are identified by its <strong>index ID</strong>, you can open the browser <strong>console</strong> and check the company array output through each iteration.</p>
+        <p>Companies are identified by its <strong>index ID</strong>, you can open the browser's <strong>console</strong>
+          and check more information about the similation.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-6 companiesData">
+        <h6><em>Actual number of companies</em> <strong id="current_company_number"></strong></h6>
+        <h6><em>Actual churn</em> <strong id="current_churn"></strong></h6>
+        <h6><em>Actual biz</em> <strong id="current_biz"></strong></h6>
+      </div>
+
+      <div class="col-6">
+        <div class="card card-shadow">
+          <div class="card-body">
+            <h6 class="card-title">Companies</h6>
+            <canvas id="companiesChart" width="400" height="200"></canvas>
+          </div>
+        </div>
       </div>
     </div>
 
