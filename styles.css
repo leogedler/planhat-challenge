@@ -1,0 +1,7 @@
+#dashboard_container {
+  display: none;
+}
+
+.mainInput {
+  max-width: 300px;
+}
