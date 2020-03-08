@@ -1,5 +1,6 @@
-
-
+/**
+ * Global variable
+ */
 let companiesArray = [];
 let generator;
 let healthChart;
@@ -9,7 +10,12 @@ let messagesChart;
 let companiesChart;
 let similationInterval;
 
+/**
+ * Start generation
+ *
+ */
 function generateCompanies() {
+  if (generator) generator = null;
   generator = new Generator();
   companiesArray = generator.generateCompanies();
   console.log('Initial Companies --->', companiesArray);

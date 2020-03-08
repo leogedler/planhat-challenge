@@ -1,6 +1,7 @@
 
 /**
  * Main class generator for the companies
+ * Core logic of the similation.
  *
  * @class Generator
  */
